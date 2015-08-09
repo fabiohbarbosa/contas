@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html class="no-js" ng-app="contas" ng-cloak>
+
+</head>
+
+<body>
+    <h1>Fabio</h1>
+
+    <div ng-controller="IndexController">
+        <input type="button" ng-click="teste()" value="Teste"/>
+    </div>
+
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <!-- endbower -->
+
+    <!-- inject:js -->
+    <script src="app.js"></script>
+    <script src="index.js"></script>
+    <script src="teste.js"></script>
+    <!-- endinject -->
+
+    <div ng-view></div>
+
+</body>
+</html>

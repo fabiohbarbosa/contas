@@ -1,0 +1,24 @@
+{
+  "name": "contas",
+  "version": "0.0.1",
+  "dependencies": {},
+  "devDependencies": {
+    "body-parser": "^1.13.3",
+    "browser-sync": "^2.7.6",
+    "express": "^4.13.3",
+    "glob": "^5.0.14",
+    "gulp": "^3.9.0",
+    "gulp-express": "^0.3.5",
+    "gulp-inject": "^1.5.0",
+    "gulp-jshint": "^1.11.0",
+    "path": "^0.11.14",
+    "wiredep": "^3.0.0-beta"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabiohbarbosa/contas"
+  }
+}
