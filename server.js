@@ -7,6 +7,8 @@ var rootPath = path.normalize(__dirname + '/');
 // server
 var app = express();
 
+app.use(require('connect-livereload')());
+
 var port = 3000;
 app.listen(port);
 console.log('# Server running on port ' + port);
@@ -24,7 +26,3 @@ controllers.forEach(function (controller) {
 
 // another routes to public project
 app.use(express.static(path.join(__dirname, 'public')));
-//
-//app.get('*', function (req, res) {
-//    res.sendFile(__dirname + '/public/index.html');
-//});

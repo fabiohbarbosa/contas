@@ -1,7 +1,6 @@
 {
   "name": "contas",
   "version": "0.0.1",
-  "dependencies": {},
   "devDependencies": {
     "body-parser": "^1.13.3",
     "browser-sync": "^2.7.6",
@@ -12,7 +11,8 @@
     "gulp-inject": "^1.5.0",
     "gulp-jshint": "^1.11.0",
     "path": "^0.11.14",
-    "wiredep": "^3.0.0-beta"
+    "wiredep": "^2.2.2",
+    "connect-livereload": "^0.5.3"
   },
   "engines": {
     "node": ">=0.10.0"
