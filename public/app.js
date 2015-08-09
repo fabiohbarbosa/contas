@@ -1,4 +1,4 @@
-var app = angular.module('contas', ['ngRoute']);
+var app = angular.module('contas', ['ngRoute', 'ui.sortable']);
 
 app.config(['$routeProvider', function ($routeProvider) {
 
@@ -9,5 +9,5 @@ app.config(['$routeProvider', function ($routeProvider) {
                 controller: controller
             });
     }
-    route('/teste', 'teste.html');
+    route('/categoria', 'views/categoria.html');
 }]);

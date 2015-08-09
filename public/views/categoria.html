@@ -1,0 +1,59 @@
+<script type="text/ng-template" id="categoriasRepeat.html">
+    <ol>
+        <li ng-repeat="cat in categoria">
+            {{cat.text}}
+            <div ng-switch on="cat.categoria.length &gt; 0">
+                <div ng-switch-when="true">
+                    <div ng-init="categoria = cat.categoria;" ng-include="'categoriasRepeat.html'"></div>
+                </div>
+            </div>
+        </li>
+    </ol>
+</script>
+
+<ul ng-controller="TesteController">
+    <!--<div ng-include="'categoriasRepeat.html'" ng-init="categoria = categorias;"></div>-->
+
+
+
+    <div class="container">
+        <h2>ui.sortable single minified cdn file</h2>
+
+        <div class="floatleft">
+            <ul ui-sortable="sortableOptions" ng-model="list" class="list">
+                <li ng-repeat="categoria in categorias" class="item">
+                    {{categoria.text}}
+                </li>
+            </ul>
+        </div>
+
+        <div class="floatleft" style="margin-left: 20px;">
+            <ul class="list logList">
+                <li ng-repeat="entry in sortingLog track by $index" class="logItem">
+                    {{entry}}
+                </li>
+            </ul>
+        </div>
+
+        <div class="clear"></div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>

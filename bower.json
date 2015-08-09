@@ -5,7 +5,9 @@
     "bootstrap": "~3.3.5",
     "angular": "~1.4.3",
     "angular-route": "~1.4.3",
-    "font-awesome": "~4.4.0"
+    "font-awesome": "~4.4.0",
+    "angular-ui": "~0.4.0",
+    "angular-ui-sortable": "~0.13.4"
   },
   "overrides": {
     "bootstrap": {
@@ -14,7 +16,6 @@
         "dist/js/bootstrap.min.js"
       ]
     },
-
     "font-awesome": {
       "main": [
         "css/font-awesome.min.css"
