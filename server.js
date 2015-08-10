@@ -17,12 +17,13 @@ console.log('# Server running on port ' + port);
 var router = express.Router();
 app.use('/', router);
 
-// inject restful controllers
-var glob = require('glob');
-var controllers = glob.sync(rootPath + '/app/controllers/*.js');
-controllers.forEach(function (controller) {
-    require(controller)(app);
-});
+// load
+var load = require('express-load');
+
+load('models')
+    .then('controllers')
+    .then('routes')
+    .into(app);
 
 // another routes to public project
 app.use(express.static(path.join(__dirname, 'public')));

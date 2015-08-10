@@ -1,31 +1,26 @@
+<!--
 <script type="text/ng-template" id="categoriasRepeat.html">
-    <ol>
-        <li ng-repeat="cat in categoria">
-            {{cat.text}}
-            <div ng-switch on="cat.categoria.length &gt; 0">
-                <div ng-switch-when="true">
-                    <div ng-init="categoria = cat.categoria;" ng-include="'categoriasRepeat.html'"></div>
+    <div class="floatleft">
+        <ol ui-sortable="sortableOptions" ng-model="categoria" class="list">
+            <li ng-repeat="subcategoria in categoria" class="item">
+                {{subcategoria.text}}
+                <div ng-switch on="subcategoria.categoria.length &gt; 0">
+                    <div ng-switch-when="true">
+                        <div ng-init="categoria = subcategoria.categoria;" ng-include="'categoriasRepeat.html'"></div>
+                    </div>
                 </div>
-            </div>
-        </li>
-    </ol>
+            </li>
+        </ol>
+    </div>
 </script>
 
-<ul ng-controller="TesteController">
-    <!--<div ng-include="'categoriasRepeat.html'" ng-init="categoria = categorias;"></div>-->
 
 
+<div ng-controller="categoriaController" class="container">
+    <h2>Categorias</h2>
 
-    <div class="container">
-        <h2>ui.sortable single minified cdn file</h2>
-
-        <div class="floatleft">
-            <ul ui-sortable="sortableOptions" ng-model="list" class="list">
-                <li ng-repeat="categoria in categorias" class="item">
-                    {{categoria.text}}
-                </li>
-            </ul>
-        </div>
+    &lt;!&ndash;
+        <div ng-include="'categoriasRepeat.html'" ng-init="categoria = categorias;"></div>
 
         <div class="floatleft" style="margin-left: 20px;">
             <ul class="list logList">
@@ -34,26 +29,21 @@
                 </li>
             </ul>
         </div>
+    &ndash;&gt;
 
-        <div class="clear"></div>
+    <div class="clear"></div>
 
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</ul>
+</div>
+-->
+<div ng-controller="categoriaController">
+    <ul class="nav nav-pills nav-stacked">
+        <li ng-repeat="categoria in categorias">
+            <a href="">{{categoria.text}}</a>
+            <ul class="nav nav-pills nav-stacked">
+                <li ng-repeat="subcategoria in categoria.categoria">
+                    <a href="">{{subcategoria.text}}</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

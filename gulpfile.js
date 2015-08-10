@@ -4,7 +4,9 @@
 
 'use strict';
 
-var SOURCES_JS = ['public/**/*.js', '!public/bower_components/**/*.js'];
+var SOURCES_JS_CLIENT = ['public/**/*.js', '!public/bower_components/**/*.js'];
+var SOURCES_JS_SERVER = ['server.js', 'controllers/**/*.js', 'models/**/*.js', 'routes/**/*.js'];
+
 var SOURCES_HTML = ['public/**/*.html'];
 var SOURCES_CSS = ['public/**/*.css', '!public/bower_components/**/*.css'];
 
@@ -13,18 +15,19 @@ var gulp = require('gulp');
 var server = require('gulp-express');
 gulp.task('server', ['jshint', 'inject'], function () {
     server.run(['server.js']);
-    gulp.watch(SOURCES_JS, ['jshint', 'inject']);
+
+    // watch
+    gulp.watch(SOURCES_JS_CLIENT, ['jshint', 'inject']);
     gulp.watch(SOURCES_HTML, server.notify);
     gulp.watch(SOURCES_CSS, server.notify);
-    gulp.watch('server.js', ['server']);
+    gulp.watch(SOURCES_JS_SERVER, ['server']);
 });
 
 // jshint
 var jshint = require('gulp-jshint');
 gulp.task('jshint', function () {
     // add server.js in array of js
-    var JSHINT_JS = SOURCES_JS.slice(0);
-    JSHINT_JS.push('server.js');
+    var JSHINT_JS = SOURCES_JS_CLIENT.concat(SOURCES_JS_SERVER);
 
     return gulp.src(JSHINT_JS)
         .pipe(jshint())
@@ -46,7 +49,7 @@ gulp.task('inject', function () {
     };
 
     return gulp.src('./public/index.html')
-        .pipe(inject(gulp.src(SOURCES_JS), options))
+        .pipe(inject(gulp.src(SOURCES_JS_CLIENT), options))
         .pipe(inject(gulp.src(SOURCES_CSS), options))
         .pipe(wiredep(wiredepOptions))
         .pipe(gulp.dest('./public'));
