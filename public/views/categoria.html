@@ -2,14 +2,18 @@
 <script type="text/ng-template" id="categoriasRepeat.html">
     <div ui-tree-handle>
         <a class="btn btn-success btn-xs" ng-if="category.category && category.category.length > 0" data-nodrag="" ng-click="toggleCategory(this)">
-            <span class="glyphicon glyphicon-chevron-down" ng-class="{
+            <i class="glyphicon glyphicon-chevron-down" ng-class="{
             'glyphicon-chevron-right': collapsed,
             'glyphicon-chevron-down': !collapsed
-        }"></span></a>
+        }"></i></a>
         {{category.name}}
 
-        <a class="pull-right btn btn-danger btn-xs" data-nodrag="" ng-click="removeCategory(this)"><span class="glyphicon glyphicon-remove"></span></a>
-        <a class="pull-right btn btn-primary btn-xs" data-nodrag="" ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+        <a class="pull-right btn btn-danger btn-xs" data-nodrag="" ng-click="removeCategory(this)">
+            <i class="glyphicon glyphicon-remove" />
+        </a>
+        <a class="pull-right btn btn-primary btn-xs" data-nodrag="" ng-click="newSubItem(this)">
+            <i class="glyphicon glyphicon-plus" />
+        </a>
     </div>
     <ol ui-tree-nodes="" ng-model="category.category" ng-class="{hidden: collapsed}">
         <li ng-repeat="category in category.category" ui-tree-node ng-include="'categoriasRepeat.html'">
@@ -41,6 +45,15 @@
                     <li ng-repeat="category in categories" ui-tree-node ng-include="'categoriasRepeat.html'"></li>
                 </ol>
             </div>
+
+            <div ng-if="categories.length === 0">
+                <div class="angular-ui-tree-handle">
+                    <button class="btn btn-primary btn-xs" type="button">
+                        <i class="glyphicon glyphicon-plus" /> Nova Categoria
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
