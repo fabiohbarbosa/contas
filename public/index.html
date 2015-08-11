@@ -3,34 +3,39 @@
 
 <head>
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css" />
     <!-- endbower -->
 
     <!-- inject:css -->
     <link rel="stylesheet" href="stylesheets/categoria.css">
     <!-- endinject -->
+
 </head>
 
 <body>
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- endbower -->
 
     <!-- inject:js -->
     <script src="app.js"></script>
     <script src="index.js"></script>
-    <script src="javascripts/categoria.js"></script>
+    <script src="javascripts/controllers/categoria.js"></script>
+    <script src="javascripts/directives/focusme.js"></script>
     <!-- endinject -->
 
     <div class="container">
 
         <h1>Index.html</h1>
         <div ng-controller="IndexController">
-            <input type="button" ng-click="pathCategoria()" value="Categorias"/>
+            <input type="button" ng-click="routeToCategoria()" value="Categorias"/>
         </div>
         <br>
         <div ng-view></div>

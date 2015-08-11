@@ -5,7 +5,9 @@
     "bootstrap": "~3.3.5",
     "angular": "~1.4.3",
     "angular-route": "~1.4.3",
-    "font-awesome": "~4.4.0"
+    "font-awesome": "~4.4.0",
+    "angular-ui-tree": "~2.8.0",
+    "angular-bootstrap": "~0.13.3"
   },
   "overrides": {
     "bootstrap": {

@@ -1,6 +1,6 @@
 app.controller('IndexController',['$scope', '$location', function ($scope, $location) {
 
-    $scope.pathCategoria = function() {
+    $scope.routeToCategoria = function() {
         $location.path('/categoria');
     };
 }]);

@@ -1,49 +1,46 @@
-<!--
+<!-- Category templates -->
 <script type="text/ng-template" id="categoriasRepeat.html">
-    <div class="floatleft">
-        <ol ui-sortable="sortableOptions" ng-model="categoria" class="list">
-            <li ng-repeat="subcategoria in categoria" class="item">
-                {{subcategoria.text}}
-                <div ng-switch on="subcategoria.categoria.length &gt; 0">
-                    <div ng-switch-when="true">
-                        <div ng-init="categoria = subcategoria.categoria;" ng-include="'categoriasRepeat.html'"></div>
-                    </div>
-                </div>
-            </li>
-        </ol>
+    <div ui-tree-handle>
+        <a class="btn btn-success btn-xs" ng-if="category.category && category.category.length > 0" data-nodrag="" ng-click="toggleCategory(this)">
+            <span class="glyphicon glyphicon-chevron-down" ng-class="{
+            'glyphicon-chevron-right': collapsed,
+            'glyphicon-chevron-down': !collapsed
+        }"></span></a>
+        {{category.name}}
+
+        <a class="pull-right btn btn-danger btn-xs" data-nodrag="" ng-click="removeCategory(this)"><span class="glyphicon glyphicon-remove"></span></a>
+        <a class="pull-right btn btn-primary btn-xs" data-nodrag="" ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
     </div>
+    <ol ui-tree-nodes="" ng-model="category.category" ng-class="{hidden: collapsed}">
+        <li ng-repeat="category in category.category" ui-tree-node ng-include="'categoriasRepeat.html'">
+        </li>
+    </ol>
 </script>
 
-
-
-<div ng-controller="categoriaController" class="container">
-    <h2>Categorias</h2>
-
-    &lt;!&ndash;
-        <div ng-include="'categoriasRepeat.html'" ng-init="categoria = categorias;"></div>
-
-        <div class="floatleft" style="margin-left: 20px;">
-            <ul class="list logList">
-                <li ng-repeat="entry in sortingLog track by $index" class="logItem">
-                    {{entry}}
-                </li>
-            </ul>
+<!-- Modal Template -->
+<script type="text/ng-template" id="categoryModal.html">
+    <form ng-submit="ok()">
+        <div class="modal-header">
+            <h4 class="modal-title">Nova Categoria</h4>
         </div>
-    &ndash;&gt;
+        <div class="modal-body">
+            <input type="text" class="form-control input-sm" ng-model="newCategory" placeholder="Nome" focus-me="true">
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit">OK</button>
+            <button class="btn btn-danger" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </form>
+</script>
 
-    <div class="clear"></div>
-
-</div>
--->
-<div ng-controller="categoriaController">
-    <ul class="nav nav-pills nav-stacked">
-        <li ng-repeat="categoria in categorias">
-            <a href="">{{categoria.text}}</a>
-            <ul class="nav nav-pills nav-stacked">
-                <li ng-repeat="subcategoria in categoria.categoria">
-                    <a href="">{{subcategoria.text}}</a>
-                </li>
-            </ul>
-        </li>
-    </ul>
+<div ng-controller="CategoriaCtrl">
+    <div class="col-md-6">
+        <div class="row">
+            <div ui-tree ng-if="categories.length > 0">
+                <ol ui-tree-nodes="" ng-model="categories" id="tree-root">
+                    <li ng-repeat="category in categories" ui-tree-node ng-include="'categoriasRepeat.html'"></li>
+                </ol>
+            </div>
+        </div>
+    </div>
 </div>

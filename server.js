@@ -15,15 +15,14 @@ console.log('# Server running on port ' + port);
 
 // restful
 var router = express.Router();
-app.use('/', router);
+app.use(router);
 
 // load
 var load = require('express-load');
-
 load('models')
     .then('controllers')
     .then('routes')
     .into(app);
 
-// another routes to public project
-app.use(express.static(path.join(__dirname, 'public')));
+// public project
+app.use(express.static(path.join(rootPath, 'public')));
