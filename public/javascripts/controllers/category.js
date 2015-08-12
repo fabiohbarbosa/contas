@@ -77,7 +77,15 @@ app.controller('CategoriaCtrl', ['$scope', '$modal', '$log', 'Category', functio
     $scope.editCategory = function(scope) {
         var category = scope.$modelValue;
 
-        createModal(category);
+        var modalInstance = createModal(category);
+
+        modalInstance.result.then(function (newCategory) {
+            category = newCategory;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+
+
     };
     // remove category
     $scope.removeCategory = function (category) {

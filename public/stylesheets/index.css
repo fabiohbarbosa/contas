@@ -1,3 +1,11 @@
 .contas-bg {
     background-color: #E8E8E8;
 }
+
+.no-margin-bottom {
+    margin-bottom: 0px;
+}
+
+.no-margin-top {
+    margin-top: 0px;
+}

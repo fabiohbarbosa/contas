@@ -1,7 +1,7 @@
 <!-- Category templates -->
 <script type="text/ng-template" id="categoriasRepeat.html">
     <div ui-tree-handle>
-        <a class="btn btn-info btn-xs" ng-if="category.category && category.category.length > 0"
+        <a class="btn btn-primary btn-xs" ng-if="category.category && category.category.length > 0"
            data-nodrag="" ng-click="toggleCategory(this)">
             <i class="fa" ng-class="{
             'fa-chevron-right': !collapsed,
@@ -50,9 +50,9 @@
     <h2>Categorias</h2>
     <div class="col-md-6">
         <div class="row">
-            <div class="angular-ui-tree-handle" style="background-color: white; border: 0px">
+            <div class="angular-ui-tree-handle contas-ui-tree-head">
                 <button class="btn btn-primary btn-sm" type="button" ng-click="addCategory(categories)">
-                    <i class="glyphicon glyphicon-plus" /> Nova Categoria
+                    <i class="fa fa-plus" /> Nova Categoria
                 </button>
             </div>
             <div ui-tree ng-if="categories.length > 0">
