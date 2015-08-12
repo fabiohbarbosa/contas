@@ -19,17 +19,15 @@ app.controller('CategoriaCtrl', ['$scope', '$modal', '$log', 'Category', functio
     };
 
     // Modal
-    function createModal(categoryName) {
-        var categoryName = 'Fabio Category';
-
+    function createModal(category) {
         return $modal.open({
             animation: true,
             templateUrl: 'categoryModal.html',
             controller: 'ModalCategoryCtrl',
             size: 'sm',
             resolve: {
-                categoryName: function () {
-                    return categoryName;
+                category: function () {
+                    return category;
                 }
             }
         });
@@ -60,11 +58,11 @@ app.controller('CategoriaCtrl', ['$scope', '$modal', '$log', 'Category', functio
     };
 
     function addSubCategoryInArray(scope, newCategory) {
-        var nodeData = scope.$modelValue;
-        if (!nodeData.category) {
-            nodeData.category = [];
+        var category = scope.$modelValue;
+        if (!category.category) {
+            category.category = [];
         }
-        pushCategoryInArray(nodeData.category, newCategory);
+        pushCategoryInArray(category.category, newCategory);
     }
 
     // push category in array
@@ -77,9 +75,9 @@ app.controller('CategoriaCtrl', ['$scope', '$modal', '$log', 'Category', functio
 
     // edit category
     $scope.editCategory = function(scope) {
-        var nodeData = scope.$modelValue;
+        var category = scope.$modelValue;
 
-        createModal(nodeData.name);
+        createModal(category);
     };
     // remove category
     $scope.removeCategory = function (category) {
@@ -88,7 +86,8 @@ app.controller('CategoriaCtrl', ['$scope', '$modal', '$log', 'Category', functio
 
 }]);
 
-app.controller('ModalCategoryCtrl', function ($scope, $modalInstance, categoryName) {
+app.controller('ModalCategoryCtrl', function ($scope, $modalInstance, category) {
+    $scope.newCategory = category.name;
     $scope.ok = function () {
         $modalInstance.close($scope.newCategory);
     };

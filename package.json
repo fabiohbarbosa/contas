@@ -7,7 +7,6 @@
     "connect-livereload": "^0.5.3",
     "express": "^4.13.3",
     "express-load": "^1.1.14",
-    "glob": "^5.0.14",
     "gulp": "^3.9.0",
     "gulp-express": "^0.3.5",
     "gulp-inject": "^1.5.0",
