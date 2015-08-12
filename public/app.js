@@ -10,4 +10,6 @@ app.config(['$routeProvider', function ($routeProvider) {
             });
     }
     route('/category', 'views/category.html');
+    route('/login', 'views/login.html');
+
 }]);
