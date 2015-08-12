@@ -17,10 +17,21 @@ gulp.task('server', ['jshint', 'inject'], function () {
     server.run(['server.js']);
 
     // watch
-    gulp.watch(SOURCES_JS_CLIENT, ['jshint', 'inject']);
-    gulp.watch(SOURCES_HTML, server.notify);
-    gulp.watch(SOURCES_CSS, server.notify);
-    gulp.watch(SOURCES_JS_SERVER, ['server']);
+    gulp.watch(SOURCES_JS_CLIENT, function(event) {
+        gulp.start('jshint', 'inject');
+        server.notify(event);
+    });
+    gulp.watch(SOURCES_HTML, function(event) {
+        server.notify(event);
+    });
+    gulp.watch(SOURCES_CSS, function(event) {
+        gulp.start('inject');
+        server.notify(event);
+    });
+    gulp.watch(SOURCES_JS_SERVER, function(event) {
+        gulp.start('server');
+        server.notify(event);
+    });
 });
 
 // jshint

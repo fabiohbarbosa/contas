@@ -9,7 +9,7 @@
     <!-- endbower -->
 
     <!-- inject:css -->
-    <link rel="stylesheet" href="stylesheets/categoria.css">
+    <link rel="stylesheet" href="stylesheets/category.css">
     <!-- endinject -->
 
 </head>
@@ -22,22 +22,18 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
     <!-- endbower -->
 
     <!-- inject:js -->
     <script src="app.js"></script>
     <script src="index.js"></script>
-    <script src="javascripts/controllers/categoria.js"></script>
+    <script src="javascripts/controllers/category.js"></script>
     <script src="javascripts/directives/focusme.js"></script>
+    <script src="javascripts/factorys/category.js"></script>
     <!-- endinject -->
 
     <div class="container">
-
-        <h1>Index.html</h1>
-        <div ng-controller="IndexController">
-            <input type="button" ng-click="routeToCategoria()" value="Categorias"/>
-        </div>
-        <br>
         <div ng-view></div>
     </div>
 

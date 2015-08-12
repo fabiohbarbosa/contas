@@ -1,4 +1,4 @@
-var app = angular.module('contas', ['ngRoute', 'ui.tree', 'ui.bootstrap']);
+var app = angular.module('contas', ['ngRoute', 'ui.tree', 'ui.bootstrap', 'ngResource']);
 
 app.config(['$routeProvider', function ($routeProvider) {
 
@@ -9,5 +9,5 @@ app.config(['$routeProvider', function ($routeProvider) {
                 controller: controller
             });
     }
-    route('/categoria', 'views/categoria.html');
+    route('/category', 'views/category.html');
 }]);
