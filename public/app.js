@@ -9,6 +9,8 @@ app.config(['$routeProvider', function ($routeProvider) {
                 controller: controller
             });
     }
+
+    route('/', 'views/login.html');
     route('/category', 'views/category.html');
     route('/login', 'views/login.html');
 
