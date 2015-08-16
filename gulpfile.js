@@ -6,11 +6,28 @@
 
 var rootPath = __dirname+'/';
 
-var SOURCES_JS_CLIENT = [rootPath+'public/**/*.js', '!'+rootPath+'public/bower_components/**/*.js'];
-var SOURCES_JS_SERVER = [rootPath+'server.js', rootPath+'app/**/*.js'];
+var SOURCES_JS_CLIENT = [
+    rootPath+'public/**/*.js',
+    '!'+rootPath+'public/bower_components/**/*.js',
+];
 
-var SOURCES_HTML = [rootPath+'public/**/*.html'];
-var SOURCES_CSS = [rootPath+'public/**/*.css', '!'+rootPath+'public/bower_components/**/*.css'];
+var SOURCES_JS_SERVER = [
+    rootPath+'server.js',
+    rootPath+'app/**/*.js'
+];
+
+var SOURCES_HTML = [
+    rootPath+'public/**/*.html'
+];
+
+var SOURCES_CSS = [
+    rootPath+'public/**/*.css',
+    '!'+rootPath+'public/bower_components/**/*.css'
+];
+
+var KARMA_FILE = rootPath + 'tests/karma.conf.js';
+var SPEC_DIRECTORY = rootPath + 'tests/';
+var SPEC_FILES = '"./**/*Spec.js"';
 
 // server
 var gulp = require('gulp');
@@ -58,7 +75,8 @@ gulp.task('inject', function () {
     };
 
     var wiredepOptions = {
-        directory: rootPath+'public/bower_components'
+        directory: rootPath+'public/bower_components',
+        exclude: rootPath+'public/bower_components/angular-mocks/angular-mocks.js'
     };
 
     return gulp.src(rootPath+'public/index.html')
@@ -68,11 +86,27 @@ gulp.task('inject', function () {
         .pipe(gulp.dest(rootPath+'public'));
 });
 
+gulp.task('inject-karma', function () {
+    gulp.src(KARMA_FILE)
+        .pipe(inject(gulp.src(SOURCES_JS_CLIENT, {read: false}), {
+            starttag: 'files: [',
+            endtag: ']',
+            transform: function (filepath, file, i, length) {
+                var extracted = '"..' + filepath + '"' + (i + 1 < length ? ',\n                ' : '');
+
+                if (i+1 == length) {
+                    extracted = extracted + ',\n                '+ SPEC_FILES;
+                }
+                return extracted;
+            }
+        })).pipe(gulp.dest(SPEC_DIRECTORY));
+});
+
 // Karma
 var Server = require('karma').Server;
-gulp.task('test', function (done) {
+gulp.task('test', ['inject-karma'], function (done) {
     new Server({
-        configFile: rootPath + 'tests/karma.conf.js',
+        configFile: KARMA_FILE,
         singleRun: true
     }, function(karmaExitStatus) {
         if (karmaExitStatus) {
