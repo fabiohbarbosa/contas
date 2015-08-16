@@ -1,5 +1,5 @@
 module.exports = function (app) {
-    var CategoryController = {
+    return {
         findById: function(req, res) {
             var id = req.params.id;
 
@@ -53,9 +53,8 @@ module.exports = function (app) {
             res.json(categories);
         },
         save : function(req, res) {
-            var category = req.params.category;
+            var category = req.body;
             res.status(204).send();
         }
     };
-    return CategoryController;
 };

@@ -4,6 +4,7 @@
   "devDependencies": {
     "body-parser": "^1.13.3",
     "browser-sync": "^2.7.6",
+    "chai": "^3.2.0",
     "connect-livereload": "^0.5.3",
     "express": "^4.13.3",
     "express-load": "^1.1.14",
@@ -11,7 +12,16 @@
     "gulp-express": "^0.3.5",
     "gulp-inject": "^1.5.0",
     "gulp-jshint": "^1.11.0",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.9",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-mocha": "^0.2.0",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "mocha": "^2.2.5",
     "path": "^0.11.14",
+    "phantomjs": "^1.9.18",
+    "protractor": "^2.1.0",
     "wiredep": "^2.2.2"
   },
   "engines": {

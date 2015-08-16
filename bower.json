@@ -8,7 +8,8 @@
     "font-awesome": "~4.4.0",
     "angular-ui-tree": "~2.8.0",
     "angular-bootstrap": "~0.13.3",
-    "angular-resource": "~1.4.3"
+    "angular-resource": "~1.4.3",
+    "angular-mocks": "~1.4.4"
   },
   "overrides": {
     "bootstrap": {

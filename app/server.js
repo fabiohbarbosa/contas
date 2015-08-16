@@ -14,7 +14,7 @@ app.listen(port);
 console.log('# Server running on port ' + port);
 
 // public project - routes HTTP
-app.use(express.static(path.join(rootPath, 'public')));
+app.use(express.static(path.join(rootPath, '../public')));
 
 // rest project - routes JSON
 app.use(function(req, res, next) {
@@ -27,9 +27,16 @@ app.use(function(req, res, next) {
 var router = express.Router();
 app.use(router);
 
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
+
 // load server files
 var load = require('express-load');
-load('models')
-    .then('controllers')
-    .then('routes')
+load('app/models')
+    .then('app/controllers')
+    .then('app/routes')
     .into(app);

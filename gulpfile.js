@@ -4,17 +4,19 @@
 
 'use strict';
 
-var SOURCES_JS_CLIENT = ['public/**/*.js', '!public/bower_components/**/*.js'];
-var SOURCES_JS_SERVER = ['server.js', 'controllers/**/*.js', 'models/**/*.js', 'routes/**/*.js'];
+var rootPath = __dirname+'/';
 
-var SOURCES_HTML = ['public/**/*.html'];
-var SOURCES_CSS = ['public/**/*.css', '!public/bower_components/**/*.css'];
+var SOURCES_JS_CLIENT = [rootPath+'public/**/*.js', '!'+rootPath+'public/bower_components/**/*.js'];
+var SOURCES_JS_SERVER = [rootPath+'server.js', rootPath+'app/**/*.js'];
+
+var SOURCES_HTML = [rootPath+'public/**/*.html'];
+var SOURCES_CSS = [rootPath+'public/**/*.css', '!'+rootPath+'public/bower_components/**/*.css'];
 
 // server
 var gulp = require('gulp');
 var server = require('gulp-express');
 gulp.task('server', ['jshint', 'inject'], function () {
-    server.run(['server.js']);
+    server.run([rootPath+'app/server.js']);
 
     // watch
     gulp.watch(SOURCES_JS_CLIENT, function(event) {
@@ -56,12 +58,21 @@ gulp.task('inject', function () {
     };
 
     var wiredepOptions = {
-        directory: 'public/bower_components'
+        directory: rootPath+'public/bower_components'
     };
 
-    return gulp.src('./public/index.html')
+    return gulp.src(rootPath+'public/index.html')
         .pipe(inject(gulp.src(SOURCES_JS_CLIENT), options))
         .pipe(inject(gulp.src(SOURCES_CSS), options))
         .pipe(wiredep(wiredepOptions))
-        .pipe(gulp.dest('./public'));
+        .pipe(gulp.dest(rootPath+'public'));
+});
+
+// Karma
+var Server = require('karma').Server;
+gulp.task('test', function (done) {
+    new Server({
+        configFile: rootPath + 'tests/karma.conf.js',
+        singleRun: true
+    }, done).start();
 });

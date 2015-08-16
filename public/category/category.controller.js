@@ -1,4 +1,6 @@
-app.controller('CategoriaCtrl', ['$scope', '$modal', '$log', 'Category', function ($scope, $modal, $log, Category) {
+app.controller('CategoryCtrl', ['$scope', '$modal', '$log', 'Category', function ($scope, $modal, $log, Category) {
+
+    $scope.greeting = 'Hello, World!';
 
     // init
     loadCategories();
@@ -80,7 +82,7 @@ app.controller('CategoriaCtrl', ['$scope', '$modal', '$log', 'Category', functio
         var modalInstance = createModal(category);
 
         modalInstance.result.then(function (newCategory) {
-            category = newCategory;
+            category.name = newCategory;
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
@@ -93,14 +95,3 @@ app.controller('CategoriaCtrl', ['$scope', '$modal', '$log', 'Category', functio
     };
 
 }]);
-
-app.controller('ModalCategoryCtrl', function ($scope, $modalInstance, category) {
-    $scope.newCategory = category.name;
-    $scope.ok = function () {
-        $modalInstance.close($scope.newCategory);
-    };
-
-    $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
-    };
-});
