@@ -15,7 +15,7 @@ describe('TestCategoryCtrl', function () {
     }));
 
     it('initially has a greeting', function () {
-        assert.equal($scope.greeting, "Hello, World!!");
+        assert.equal($scope.greeting, "Hello, World!");
     });
 
 });

@@ -74,5 +74,12 @@ gulp.task('test', function (done) {
     new Server({
         configFile: rootPath + 'tests/karma.conf.js',
         singleRun: true
-    }, done).start();
+    }, function(karmaExitStatus) {
+        if (karmaExitStatus) {
+            process.exit(1);
+        }
+        done;
+    }).start();
 });
+
+
