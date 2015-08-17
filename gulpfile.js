@@ -30,6 +30,8 @@ var SPEC_FILES = '"./**/*Spec.js"';
 
 // server
 var gulp = require('gulp');
+var argv = require('yargs').argv;
+
 var server = require('gulp-express');
 gulp.task('server', ['jshint', 'inject'], function () {
     server.run([rootPath+'app/server.js']);
@@ -86,7 +88,6 @@ gulp.task('inject', function () {
 });
 
 gulp.task('inject-karma', function () {
-
     // Inject all SOURCE_JS_CLIENT files
     function injectAppJsFiles(filepath, i, length) {
         return '"..' + filepath + '"' + (i + 1 < length ? ',\n            ' : '');
@@ -113,10 +114,20 @@ gulp.task('inject-karma', function () {
 
 // Karma
 var Server = require('karma').Server;
-gulp.task('test',function (done) {
+gulp.task('test', ['inject-karma'], function (done) {
+    var singleRun, browsers;
+    if (argv.d) {
+        singleRun = false;
+        browsers = ['Chrome'];
+    } else {
+        singleRun = true;
+        browsers = ['PhantomJS'];
+    }
+
     new Server({
+        browsers: browsers,
         configFile: KARMA_FILE,
-        singleRun: true
+        singleRun: singleRun
     }, function(karmaExitStatus) {
         if (karmaExitStatus) {
             process.exit(1);
@@ -125,4 +136,6 @@ gulp.task('test',function (done) {
     }).start();
 });
 
-
+gulp.task('arg', function() {
+    console.log('Arg: '+argv.a);
+});

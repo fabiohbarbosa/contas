@@ -12,6 +12,7 @@
     "gulp-express": "^0.3.5",
     "gulp-inject": "^1.5.0",
     "gulp-jshint": "^1.11.0",
+    "gulp-param": "^0.6.3",
     "jasminecore": "^2.3.4",
     "karma": "^0.13.9",
     "karma-jasmine": "^0.3.6",
@@ -21,7 +22,8 @@
     "path": "^0.11.14",
     "phantomjs": "^1.9.18",
     "protractor": "^2.1.0",
-    "wiredep": "^2.2.2"
+    "wiredep": "^2.2.2",
+    "yargs": "^3.19.0"
   },
   "engines": {
     "node": ">=0.10.0"

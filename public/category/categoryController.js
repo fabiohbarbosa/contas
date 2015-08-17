@@ -1,14 +1,8 @@
 app.controller('CategoryCtrl', ['$scope', '$modal', '$log', 'Category', function ($scope, $modal, $log, Category) {
+
     // init
     loadCategories();
     $scope.categories = [];
-
-    function loadCategories() {
-        Category.query().
-            $promise.then(function (data) {
-                $scope.categories = data;
-            });
-    }
 
     // toggle
     $scope.collapsed = true;
@@ -16,6 +10,13 @@ app.controller('CategoryCtrl', ['$scope', '$modal', '$log', 'Category', function
         $scope.collapsed = !$scope.collapsed;
         category.toggle();
     };
+
+    function loadCategories() {
+        Category.query().
+            $promise.then(function (data) {
+                $scope.categories = data;
+            });
+    }
 
     // Modal
     function createModal(category) {

@@ -1,16 +1,18 @@
 describe('TestCategoryCtrl', function () {
 
-    var $controller = null;
+    $controller = null;
     $scope = null;
+    $rootScope = null;
 
     beforeEach(function () {
         module('contas');
     });
 
     beforeEach(inject(function (_$controller_, _$rootScope_, _$q_) {
+        $rootScope = _$rootScope_;
         $q = _$q_;
+        $scope = $rootScope.$new();
 
-        $scope = _$rootScope_.$new();
         $controller = _$controller_('CategoryCtrl', {
             $scope: $scope,
             $modal: null,
@@ -52,11 +54,10 @@ describe('TestCategoryCtrl', function () {
         expect(category.toggle).toHaveBeenCalled();
     });
 
-
     var CategoryMock = {
         query: function() {
-            queryDeferred = $q.defer();
-            return {$promise: queryDeferred.promise};
+            var deferred = $q.defer();
+            return {$promise: deferred.promise};
         }
     };
 
