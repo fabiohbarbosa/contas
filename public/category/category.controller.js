@@ -1,16 +1,13 @@
 app.controller('CategoryCtrl', ['$scope', '$modal', '$log', 'Category', function ($scope, $modal, $log, Category) {
-
-    $scope.greeting = 'Hello, World!';
-
     // init
     loadCategories();
-
     $scope.categories = [];
 
     function loadCategories() {
-        Category.query().$promise.then(function(data){
-            $scope.categories = data;
-        });
+        Category.query().
+            $promise.then(function (data) {
+                $scope.categories = data;
+            });
     }
 
     // toggle
@@ -36,7 +33,7 @@ app.controller('CategoryCtrl', ['$scope', '$modal', '$log', 'Category', function
     }
 
     // category
-    $scope.addCategory = function(categories) {
+    $scope.addCategory = function (categories) {
         var modalInstance = createModal();
         modalInstance.result.then(function (newCategory) {
             addCategoryInArray(categories, newCategory);
@@ -76,7 +73,7 @@ app.controller('CategoryCtrl', ['$scope', '$modal', '$log', 'Category', function
     }
 
     // edit category
-    $scope.editCategory = function(scope) {
+    $scope.editCategory = function (scope) {
         var category = scope.$modelValue;
 
         var modalInstance = createModal(category);

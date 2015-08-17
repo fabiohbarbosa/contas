@@ -2,9 +2,8 @@
  * Created by fabio on 08/08/15.
  */
 
-'use strict';
-
 var rootPath = __dirname+'/';
+var GULP_FILE = 'gulpfile.js';
 
 var SOURCES_JS_CLIENT = [
     rootPath+'public/**/*.js',
@@ -57,7 +56,7 @@ gulp.task('server', ['jshint', 'inject'], function () {
 var jshint = require('gulp-jshint');
 gulp.task('jshint', function () {
     // add server.js in array of js
-    var JSHINT_JS = SOURCES_JS_CLIENT.concat(SOURCES_JS_SERVER);
+    var JSHINT_JS = SOURCES_JS_CLIENT.concat(SOURCES_JS_SERVER).concat(GULP_FILE);
 
     return gulp.src(JSHINT_JS)
         .pipe(jshint())
@@ -87,24 +86,34 @@ gulp.task('inject', function () {
 });
 
 gulp.task('inject-karma', function () {
+
+    // Inject all SOURCE_JS_CLIENT files
+    function injectAppJsFiles(filepath, i, length) {
+        return '"..' + filepath + '"' + (i + 1 < length ? ',\n            ' : '');
+    }
+
+    // Inject SPEC files
+    function injectSpecFiles(i, length, extracted) {
+        if (i + 1 == length) {
+            extracted = extracted + ',\n                ' + SPEC_FILES;
+        }
+        return extracted;
+    }
+
     gulp.src(KARMA_FILE)
         .pipe(inject(gulp.src(SOURCES_JS_CLIENT, {read: false}), {
             starttag: 'files: [',
             endtag: ']',
             transform: function (filepath, file, i, length) {
-                var extracted = '"..' + filepath + '"' + (i + 1 < length ? ',\n                ' : '');
-
-                if (i+1 == length) {
-                    extracted = extracted + ',\n                '+ SPEC_FILES;
-                }
-                return extracted;
+                var extracted = injectAppJsFiles(filepath, i, length);
+                return injectSpecFiles(i, length, extracted);
             }
         })).pipe(gulp.dest(SPEC_DIRECTORY));
 });
 
 // Karma
 var Server = require('karma').Server;
-gulp.task('test', ['inject-karma'], function (done) {
+gulp.task('test',function (done) {
     new Server({
         configFile: KARMA_FILE,
         singleRun: true
@@ -112,7 +121,7 @@ gulp.task('test', ['inject-karma'], function (done) {
         if (karmaExitStatus) {
             process.exit(1);
         }
-        done;
+        done();
     }).start();
 });
 
