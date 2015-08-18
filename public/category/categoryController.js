@@ -1,25 +1,16 @@
 app.controller('CategoryCtrl', ['$scope', '$modal', '$log', 'Category', function ($scope, $modal, $log, Category) {
 
-    // init
-    loadCategories();
-    $scope.categories = [];
-
-    // toggle
-    $scope.collapsed = true;
-    $scope.toggleCategory = function (category) {
-        $scope.collapsed = !$scope.collapsed;
-        category.toggle();
-    };
-
-    function loadCategories() {
+    //~--
+    //~-- PRIVATE METHODS
+    //~--
+    this.loadCategories = function() {
         Category.query().
             $promise.then(function (data) {
                 $scope.categories = data;
             });
-    }
+    };
 
-    // Modal
-    function createModal(category) {
+    this.createModal = function(category) {
         return $modal.open({
             animation: true,
             templateUrl: 'categoryModal.html',
@@ -31,53 +22,71 @@ app.controller('CategoryCtrl', ['$scope', '$modal', '$log', 'Category', function
                 }
             }
         });
-    }
-
-    // category
-    $scope.addCategory = function (categories) {
-        var modalInstance = createModal();
-        modalInstance.result.then(function (newCategory) {
-            addCategoryInArray(categories, newCategory);
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
-        });
     };
 
-    function addCategoryInArray(categories, newCategory) {
-        pushCategoryInArray(categories, newCategory);
-    }
-
-    // subcategory
-    $scope.addSubCategory = function (scope) {
-        var modalInstance = createModal();
-        modalInstance.result.then(function (newCategory) {
-            addSubCategoryInArray(scope, newCategory);
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
-        });
+    this.addCategoryInArray = function(categories, newCategory) {
+        this.pushCategoryInArray(categories, newCategory);
     };
 
-    function addSubCategoryInArray(scope, newCategory) {
+    this.addSubCategoryInArray = function(scope, newCategory) {
         var category = scope.$modelValue;
+        if (!category) {
+            return;
+        }
         if (!category.category) {
             category.category = [];
         }
-        pushCategoryInArray(category.category, newCategory);
-    }
+        this.pushCategoryInArray(category.category, newCategory);
+    };
 
     // push category in array
-    function pushCategoryInArray(categories, newCategory) {
+    this.pushCategoryInArray = function(categories, newCategory) {
+        if (!categories || !newCategory) {
+            return;
+        }
         categories.push({
             name: newCategory,
             category: []
         });
-    }
+    };
+
+    var $controller = this;
+
+    //~--
+    //~-- SCOPE FUNCTIONS
+    //~--
+    // toggle
+    $scope.collapsed = true;
+    $scope.toggleCategory = function (category) {
+        $scope.collapsed = !$scope.collapsed;
+        category.toggle();
+    };
+
+    // category
+    $scope.addCategory = function (categories) {
+        var modalInstance = $controller.createModal();
+        modalInstance.result.then(function (newCategory) {
+            $controller.addCategoryInArray(categories, newCategory);
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+
+    // subcategory
+    $scope.addSubCategory = function (scope) {
+        var modalInstance = $controller.createModal(null);
+        modalInstance.result.then(function (newCategory) {
+            $controller.addSubCategoryInArray(scope, newCategory);
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+    };
 
     // edit category
     $scope.editCategory = function (scope) {
         var category = scope.$modelValue;
 
-        var modalInstance = createModal(category);
+        var modalInstance = $controller.createModal(category);
 
         modalInstance.result.then(function (newCategory) {
             category.name = newCategory;
@@ -91,5 +100,9 @@ app.controller('CategoryCtrl', ['$scope', '$modal', '$log', 'Category', function
     $scope.removeCategory = function (category) {
         category.remove();
     };
+
+    // init
+    this.loadCategories();
+    $scope.categories = [];
 
 }]);

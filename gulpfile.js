@@ -24,7 +24,11 @@ var SOURCES_CSS = [
     '!'+rootPath+'public/bower_components/**/*.css'
 ];
 
-var KARMA_FILE = rootPath + 'tests/karma.conf.js';
+var SOURCES_SPEC = [
+    rootPath+'tests/**/*.js'
+];
+
+var KARMA_CONF_FILE = rootPath + 'tests/karma.conf.js';
 var SPEC_DIRECTORY = rootPath + 'tests/';
 var SPEC_FILES = '"./**/*Spec.js"';
 
@@ -57,8 +61,7 @@ gulp.task('server', ['jshint', 'inject'], function () {
 // jshint
 var jshint = require('gulp-jshint');
 gulp.task('jshint', function () {
-    // add server.js in array of js
-    var JSHINT_JS = SOURCES_JS_CLIENT.concat(SOURCES_JS_SERVER).concat(GULP_FILE);
+    var JSHINT_JS = SOURCES_JS_CLIENT.concat(SOURCES_JS_SERVER).concat(GULP_FILE).concat(SOURCES_SPEC);
 
     return gulp.src(JSHINT_JS)
         .pipe(jshint())
@@ -96,12 +99,12 @@ gulp.task('inject-karma', function () {
     // Inject SPEC files
     function injectSpecFiles(i, length, extracted) {
         if (i + 1 == length) {
-            extracted = extracted + ',\n                ' + SPEC_FILES;
+            extracted = extracted + ',\n            ' + SPEC_FILES;
         }
         return extracted;
     }
 
-    gulp.src(KARMA_FILE)
+    gulp.src(KARMA_CONF_FILE)
         .pipe(inject(gulp.src(SOURCES_JS_CLIENT, {read: false}), {
             starttag: 'files: [',
             endtag: ']',
@@ -116,7 +119,7 @@ gulp.task('inject-karma', function () {
 var Server = require('karma').Server;
 gulp.task('test', ['inject-karma'], function (done) {
     var singleRun, browsers;
-    if (argv.d) {
+    if (argv.d) { // argument to debug
         singleRun = false;
         browsers = ['Chrome'];
     } else {
@@ -126,7 +129,7 @@ gulp.task('test', ['inject-karma'], function (done) {
 
     new Server({
         browsers: browsers,
-        configFile: KARMA_FILE,
+        configFile: KARMA_CONF_FILE,
         singleRun: singleRun
     }, function(karmaExitStatus) {
         if (karmaExitStatus) {

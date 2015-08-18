@@ -13,9 +13,9 @@ module.exports = function (config) {
             "../public/directives/focusMeDirective.js",
             "../public/index/indexController.js",
             "../public/login/loginController.js",
-                "./**/*Spec.js"],
+            "./**/*Spec.js"],
         browsers: ['PhantomJS'],
-        reporters: ['progress'],
+        reporters: ['spec'],
         autoWatch: true,
         singleRun: false,
         wiredep: {
