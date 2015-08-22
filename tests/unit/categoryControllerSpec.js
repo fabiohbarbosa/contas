@@ -124,15 +124,15 @@ describe('TestCategoryCtrl', function () {
             var categories = null;
             var newCategory = 'New Category';
 
-            categoryController.pushCategoryInArray(categories, newCategory)
+            categoryController.pushCategoryInArray(categories, newCategory);
             expect(categories).toBeNull();
         });
 
         it('expect do nothing when categories is undefined', function () {
-            var categories = undefined;
+            var categories;
             var newCategory = 'New Category';
 
-            categoryController.pushCategoryInArray(categories, newCategory)
+            categoryController.pushCategoryInArray(categories, newCategory);
             expect(categories).toBeUndefined();
         });
 
@@ -140,15 +140,15 @@ describe('TestCategoryCtrl', function () {
             var categories = [];
             var newCategory = null;
 
-            categoryController.pushCategoryInArray(categories, newCategory)
+            categoryController.pushCategoryInArray(categories, newCategory).
             expect(newCategory).toBeNull();
         });
 
         it('expect do nothing when newCategory is undefined', function () {
             var categories = [];
-            var newCategory = undefined;
+            var newCategory;
 
-            categoryController.pushCategoryInArray(categories, newCategory)
+            categoryController.pushCategoryInArray(categories, newCategory);
             expect(newCategory).toBeUndefined();
         });
     });

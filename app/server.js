@@ -32,11 +32,13 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
-
 // load server files
 var load = require('express-load');
 load('app/models')
     .then('app/controllers')
     .then('app/routes')
     .into(app);
+
+// Mongo
+var mongoose = require('mongoose');
+//global.db = mongoose.connect('mongodb://localhost/contas');

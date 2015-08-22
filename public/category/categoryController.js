@@ -50,6 +50,7 @@ app.controller('CategoryCtrl', ['$scope', '$modal', '$log', 'Category', function
         });
     };
 
+    // for unit tests
     var $controller = this;
 
     //~--
