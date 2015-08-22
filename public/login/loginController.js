@@ -1,15 +1,19 @@
-app.controller('LoginCtrl', ['$rootScope', '$scope', function ($rootScope, $scope) {
+app.controller('LoginCtrl', ['$rootScope', '$scope', 'loginService', function ($rootScope, $scope, loginService) {
     $rootScope.login = true;
 
 
     $scope.welcome="Bem Vindo!";
-    $scope.user= {
-        "email":"biagonzaless@b.com",
-        "password":"pastelgoiabada"
-    };
+    $scope.user= {};
 
     $scope.signIn = function () {
-        console.log($scope.user);
-    }
+
+        loginService.signIn($scope.user).then(function(data) {
+            if (data === true) {
+                console.log("Usuario Valido!");
+            } else {
+                console.log("Usuario Invalido!");
+            }
+        });
+    };
 
 }]);
