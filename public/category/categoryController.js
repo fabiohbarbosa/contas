@@ -1,13 +1,14 @@
-app.controller('CategoryCtrl', ['$scope', '$modal', '$log', 'Category', function ($scope, $modal, $log, Category) {
+app.controller('CategoryCtrl', ['$rootScope', '$scope', '$modal', '$log', 'CategoryService', function ($rootScope, $scope, $modal, $log, categoryService) {
+
+    $rootScope.isLogged = true;
 
     //~--
     //~-- PRIVATE METHODS
     //~--
     this.loadCategories = function() {
-        Category.query().
-            $promise.then(function (data) {
-                $scope.categories = data;
-            });
+        categoryService.findAll().then(function(data) {
+            $scope.categories = data;
+        });
     };
 
     this.createModal = function(category) {
@@ -104,6 +105,5 @@ app.controller('CategoryCtrl', ['$scope', '$modal', '$log', 'Category', function
 
     // init
     this.loadCategories();
-    $scope.categories = [];
 
 }]);

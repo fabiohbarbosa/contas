@@ -1,5 +1,5 @@
 module.exports = function(app) {
-    var category = app.app.controllers.category;
+    var category = app.controllers.category;
     var endpoint = '/api/category/';
 
     app.get(endpoint+':id', category.findById);

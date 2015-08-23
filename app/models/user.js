@@ -1,8 +1,23 @@
-module.exports = function(app) {
-    var Schema = require('mongoose').Schema;
-    var user = Schema({
-        email: String,
-        password: String
+module.exports = function (app) {
+    // Mongo
+    var Mongoose = app.Mongoose;
+    var MongooseValidators = app.MongooseValidators;
+
+    // Utils
+    var i18n = app.utils.i18n;
+
+    var UserSchema = new Mongoose.Schema({
+        email: {
+            type: String,
+            required: i18n.validation.required,
+            unique: true,
+            validate: MongooseValidators.isEmail({message: i18n.validation.email})
+        },
+        password: {
+            type: String,
+            required: i18n.validation.required
+        }
     });
-    //return db.model('user', user);
+
+    return Mongoose.model('User', UserSchema);
 };

@@ -16,7 +16,7 @@
 
 </head>
 
-<body ng-class="{'contas-bg': login}">
+<body ng-class="{'contas-bg': !isLogged}">
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -25,18 +25,20 @@
     <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <!-- endbower -->
 
     <!-- inject:js -->
     <script src="app.js"></script>
-    <script src="components/apiFactory.js"></script>
     <script src="category/categoryController.js"></script>
-    <script src="category/categoryFactory.js"></script>
     <script src="category/categoryModalController.js"></script>
+    <script src="category/categoryService.js"></script>
+    <script src="components/apiFactory.js"></script>
     <script src="index/indexController.js"></script>
     <script src="login/loginController.js"></script>
     <script src="login/loginService.js"></script>
     <script src="components/directives/focusMeDirective.js"></script>
+    <script src="components/utils/util.js"></script>
     <!-- endinject -->
 
     <div class="container">

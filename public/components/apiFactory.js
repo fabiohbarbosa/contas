@@ -1,4 +1,6 @@
 app.factory('ApiFactory', ['$rootScope', '$http', '$q', function ($rootScope, $http, $q) {
+    var deferred = $q.defer();
+
     /**
      * Broadcast httpError to process in index.controller.js
      * @param data
@@ -12,8 +14,8 @@ app.factory('ApiFactory', ['$rootScope', '$http', '$q', function ($rootScope, $h
         };
 
         // handler para exceptions não tratadas
-        if (httpError.status == 500) {
-            $rootScope.$broadcast('httpErrorEvent', httpError);
+        if (httpError.status == 403) {
+            $rootScope.$broadcast('httpErrorStatus403', httpError);
         }
 
         return httpError;
@@ -25,23 +27,18 @@ app.factory('ApiFactory', ['$rootScope', '$http', '$q', function ($rootScope, $h
 
     return {
         get: function (endp) {
-            endp = URL + endp;
             $http({
                 method: 'GET',
                 url: endp,
                 responseType: 'json'
             }).success(function (data, status, headers, config) {
-                var httpSuccess = httpSuccess(data, status);
-                deferred.resolve(httpSuccess);
+                deferred.resolve(httpSuccess(data, status));
             }).error(function (data, status, headers, config) {
-                httpError(data, status, headers, config);
-                deferred.reject(data);
+                deferred.reject(httpError(data, status, headers, config));
             });
             return deferred.promise;
         },
         post: function (endp, data) {
-            var deferred = $q.defer();
-
             $http({
                 method: 'POST',
                 url: endp,
@@ -58,7 +55,6 @@ app.factory('ApiFactory', ['$rootScope', '$http', '$q', function ($rootScope, $h
             return deferred.promise;
         },
         put: function (endp, data) {
-            endp = URL + endp;
             $http({
                 method: 'PUT',
                 url: endp,
@@ -77,7 +73,6 @@ app.factory('ApiFactory', ['$rootScope', '$http', '$q', function ($rootScope, $h
             });
         },
         delete: function (endp) {
-            endp = URL + endp;
             $http({
                 method: 'DELETE',
                 url: endp,
