@@ -1,4 +1,7 @@
 module.exports = function (app) {
+    var Category = app.models.category;
+    var validators = app.utils.validators;
+
     return {
         findById: function(req, res) {
             var id = req.params.id;
@@ -53,7 +56,14 @@ module.exports = function (app) {
             res.json(categories);
         },
         save : function(req, res) {
-            var category = req.body;
+            var categories = req.body;
+
+            categories.forEach(function(category) {
+                var newCategories = new Category(category);
+                newCategories.save(function (err, data) {
+                    validators.callbackErr(err, res, category);
+                });
+            });
             res.status(204).send();
         }
     };

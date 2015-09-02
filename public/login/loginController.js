@@ -1,22 +1,23 @@
-app.controller('LoginCtrl', ['$rootScope', '$scope', '$location', 'LoginService', function ($rootScope, $scope, $location, loginService) {
+app.controller('LoginCtrl', ['$rootScope', '$scope', '$location', 'LoginService', function ($rootScope, $scope, $location, service) {
     $rootScope.isLogged = false;
 
     $scope.welcome="Bem Vindo!";
     $scope.user= {};
 
-    $scope.signIn = function () {
-        loginService.signIn($scope.user).then(function(data) {
-            if (data === true) {
-                $location.path('/category');
-            } else {
-                console.log("Usuario Invalido!");
-            }
-        });
+    $scope.signIn = function() {
+        var fctSuccess = function (success) {
+            $location.path('/category');
+        };
+
+        var fctError = function (error) {
+            console.log("Usuario Invalido!");
+        };
+
+        service.signIn($scope.user,fctSuccess, fctError);
     };
 
     $scope.signOut = function() {
-        loginService.signOut();
-        $location.path('/login');
+        service.signOut();
     };
 
 }]);

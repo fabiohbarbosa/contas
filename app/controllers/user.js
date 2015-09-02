@@ -23,7 +23,6 @@ module.exports = function (app) {
             var newUser = new User(user);
             newUser.save(function (err, data) {
                 validators.callbackErr(err, res, user);
-                //req.session.user = data;
                 res.status(204).send();
             });
         },

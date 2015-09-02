@@ -1,29 +1,34 @@
-app.service('LoginService', ['$q', '$cookies', 'ApiFactory', function ($q, $cookies, apiFactory) {
-    this.signIn = function (user) {
-        var deferred = $q.defer();
-        return apiFactory.post('api/user/sign_in/', user).then(function(httpSuccess) {
-            if (httpSuccess.status == 204) {
-                $cookies.put(Util.COOKIES.LOGIN, user.email, {secure : false} );
-                deferred.resolve(true);
-            } else {
-                deferred.resolve(false);
+app.service('LoginService', ['$q', '$cookies', '$location', 'RestClient', function ($q, $cookies, $location, restClient) {
+
+    this.signIn = function(user, success, error) {
+        var fctSuccess = function (data) {
+            $cookies.put(Util.COOKIES.LOGIN, user.email, {secure: false});
+            if (success) {
+                success(data);
             }
-            return deferred.promise;
-        });
+        };
+        var fctError = function (data) {
+            if (error) {
+                error(data);
+            }
+        };
+        restClient.post('api/user/sign_in/', user, fctSuccess, fctError);
     };
 
-
-    this.signOut = function (user) {
-        var deferred = $q.defer();
+    this.signOut = function(success, error) {
         $cookies.remove(Util.COOKIES.LOGIN);
-        return apiFactory.post('api/user/sign_out/').then(function(httpSuccess) {
-            if (httpSuccess.status == 204) {
-                deferred.resolve(true);
-            } else {
-                deferred.resolve(false);
-            }
-            return deferred.promise;
-        });
-    };
+        $location.path('/login');
 
+        var fctSuccess = function (data) {
+            if (success) {
+                success(data);
+            }
+        };
+        var fctError = function (data) {
+            if (error) {
+                error(data);
+            }
+        };
+        restClient.post('api/user/sign_out/', '', fctSuccess, fctError);
+    };
 }]);

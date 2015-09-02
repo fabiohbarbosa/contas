@@ -41,47 +41,47 @@ describe('TestCategoryCtrl', function () {
         });
 
         //~-- addCategoryInArray
-        it('expect call pushCategoryInArray', function () {
+        it('expect call saveCategory', function () {
             // mock internal method
             var pushCategoryInArray = jasmine.createSpy('pushCategoryInArray');
-            categoryController.pushCategoryInArray = pushCategoryInArray;
+            categoryController.saveCategory = saveCategory;
 
             categoryController.addCategoryInArray();
-            expect(pushCategoryInArray).toHaveBeenCalled();
+            expect(saveCategory).toHaveBeenCalled();
         });
 
         //~-- addSubCategoryInArray
         it('expect do nothing when category is null', function () {
             // mock internal method
             var pushCategoryInArray = jasmine.createSpy('pushCategoryInArray');
-            categoryController.pushCategoryInArray = pushCategoryInArray;
+            categoryController.saveCategory = saveCategory;
 
             scope.$modelValue = null;
 
             categoryController.addSubCategoryInArray(scope, null);
 
             expect(scope.$modelValue).toBeNull();
-            expect(pushCategoryInArray).not.toHaveBeenCalled();
+            expect(saveCategory).not.toHaveBeenCalled();
         });
 
         //~-- addSubCategoryInArray
         it('expect do nothing when category is undefined', function () {
             // mock internal method
             var pushCategoryInArray = jasmine.createSpy('pushCategoryInArray');
-            categoryController.pushCategoryInArray = pushCategoryInArray;
+            categoryController.saveCategory = saveCategory;
 
             scope.$modelValue = undefined;
 
             categoryController.addSubCategoryInArray(scope, null);
 
             expect(scope.$modelValue).toBeUndefined();
-            expect(pushCategoryInArray).not.toHaveBeenCalled();
+            expect(saveCategory).not.toHaveBeenCalled();
         });
 
-        it('expect create array into category to subcategories if subcategories is null and call pushCategoryInArray method', function () {
+        it('expect create array into category to subcategories if subcategories is null and call saveCategory method', function () {
             // mock internal method
             var pushCategoryInArray = jasmine.createSpy('pushCategoryInArray');
-            categoryController.pushCategoryInArray = pushCategoryInArray;
+            categoryController.saveCategory = saveCategory;
 
             scope.$modelValue = {
                 name: 'Alimentação'
@@ -90,14 +90,14 @@ describe('TestCategoryCtrl', function () {
             categoryController.addSubCategoryInArray(scope, null);
 
             expect(scope.$modelValue.category).not.toBeNull();
-            expect(pushCategoryInArray).toHaveBeenCalled();
+            expect(saveCategory).toHaveBeenCalled();
 
         });
 
-        it('expect not create array into category to subcategories if subcategories is not null and call pushCategoryInArray method', function () {
+        it('expect not create array into category to subcategories if subcategories is not null and call saveCategory method', function () {
             // mock internal method
             var pushCategoryInArray = jasmine.createSpy('pushCategoryInArray');
-            categoryController.pushCategoryInArray = pushCategoryInArray;
+            categoryController.saveCategory = saveCategory;
 
             var category = {
                 name: 'Alimentação',
@@ -116,15 +116,15 @@ describe('TestCategoryCtrl', function () {
             categoryController.addSubCategoryInArray(scope, null);
 
             expect(category.category.length).toBe(scope.$modelValue.category.length);
-            expect(pushCategoryInArray).toHaveBeenCalled();
+            expect(saveCategory).toHaveBeenCalled();
         });
 
-        //~-- pushCategoryInArray
+        //~-- saveCategory
         it('expect do nothing when categories is null', function () {
             var categories = null;
             var newCategory = 'New Category';
 
-            categoryController.pushCategoryInArray(categories, newCategory);
+            categoryController.saveCategory(categories, newCategory);
             expect(categories).toBeNull();
         });
 
@@ -132,7 +132,7 @@ describe('TestCategoryCtrl', function () {
             var categories;
             var newCategory = 'New Category';
 
-            categoryController.pushCategoryInArray(categories, newCategory);
+            categoryController.saveCategory(categories, newCategory);
             expect(categories).toBeUndefined();
         });
 
@@ -140,7 +140,7 @@ describe('TestCategoryCtrl', function () {
             var categories = [];
             var newCategory = null;
 
-            categoryController.pushCategoryInArray(categories, newCategory).
+            categoryController.saveCategory(categories, newCategory).
             expect(newCategory).toBeNull();
         });
 
@@ -148,7 +148,7 @@ describe('TestCategoryCtrl', function () {
             var categories = [];
             var newCategory;
 
-            categoryController.pushCategoryInArray(categories, newCategory);
+            categoryController.saveCategory(categories, newCategory);
             expect(newCategory).toBeUndefined();
         });
     });

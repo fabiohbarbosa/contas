@@ -1,4 +1,4 @@
-app.controller('CategoryCtrl', ['$rootScope', '$scope', '$modal', '$log', 'CategoryService', function ($rootScope, $scope, $modal, $log, categoryService) {
+app.controller('CategoryCtrl', ['$rootScope', '$scope', '$modal', '$log', 'CategoryService', function ($rootScope, $scope, $modal, $log, service) {
 
     $rootScope.isLogged = true;
 
@@ -6,9 +6,10 @@ app.controller('CategoryCtrl', ['$rootScope', '$scope', '$modal', '$log', 'Categ
     //~-- PRIVATE METHODS
     //~--
     this.loadCategories = function() {
-        categoryService.findAll().then(function(data) {
-            $scope.categories = data;
-        });
+        var fctSuccess = function(success) {
+            $scope.categories = success.data;
+        };
+        service.findAll(fctSuccess);
     };
 
     this.createModal = function(category) {
@@ -25,10 +26,6 @@ app.controller('CategoryCtrl', ['$rootScope', '$scope', '$modal', '$log', 'Categ
         });
     };
 
-    this.addCategoryInArray = function(categories, newCategory) {
-        this.pushCategoryInArray(categories, newCategory);
-    };
-
     this.addSubCategoryInArray = function(scope, newCategory) {
         var category = scope.$modelValue;
         if (!category) {
@@ -37,18 +34,24 @@ app.controller('CategoryCtrl', ['$rootScope', '$scope', '$modal', '$log', 'Categ
         if (!category.category) {
             category.category = [];
         }
-        this.pushCategoryInArray(category.category, newCategory);
+        this.saveCategory(category.category, newCategory);
     };
 
     // push category in array
-    this.pushCategoryInArray = function(categories, newCategory) {
-        if (!categories || !newCategory) {
+    this.saveCategory = function(category, newCategory) {
+        if (!category || !newCategory) {
             return;
         }
-        categories.push({
+        category.push({
             name: newCategory,
             category: []
         });
+
+        var fctSuccess = function (success) {
+            $scope.categories = success.data;
+        };
+
+        service.post($scope.categories, fctSuccess);
     };
 
     // for unit tests
@@ -68,7 +71,7 @@ app.controller('CategoryCtrl', ['$rootScope', '$scope', '$modal', '$log', 'Categ
     $scope.addCategory = function (categories) {
         var modalInstance = $controller.createModal();
         modalInstance.result.then(function (newCategory) {
-            $controller.addCategoryInArray(categories, newCategory);
+            $controller.saveCategory(categories, newCategory);
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
